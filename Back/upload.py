@@ -1,12 +1,17 @@
 from flask import Flask
 import os
-#import magic
 import urllib.request
-# from app import app
 from flask import Flask, flash, request, redirect, render_template
 from werkzeug.utils import secure_filename
-# import docx
+############################################# import docx
 import pandas
+
+try:
+  from PIL import Image
+except ImportError:
+  import Image
+import pytesseract
+# pytesseract.pytesseract.tesseract_cmd = r'<full_path_to_your_tesseract_executable>'
 
 # CORS(app)
 
@@ -21,8 +26,8 @@ def upload_form():
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
-  images = ['png','jpg','jpeg']
-  texts  = ['txt','csv','json']
+  images = ['png','jpg','jpeg','gif']
+  texts  = ['csv','txt','json']
     
   if request.method == 'POST':
         # check if the post request has the file part
@@ -41,7 +46,8 @@ def upload_file():
       
       text = ''
       if file_ext in images:
-        text = os.popen(f'tesseract /mnt/c/Resources/TechMadness/{file.filename} stdout -l eng+rus').read()
+        # text = os.popen(f'tesseract /mnt/c/Resources/TechMadness/{file.filename} stdout -l eng+rus').read()
+        text = 
         print(type(text))
       elif file_ext == 'xlsx':
         text = file.to_csv(file,index=False,header=None,encoding='utf-8').read()
@@ -57,5 +63,5 @@ def upload_file():
       return score_text(text)
 #       return 'OK'
     else:
-      flash('Allowed file types are txt, csv, json, docx, xlsx, png, jpg, jpeg')
+      flash('Allowed file types are doc/docx, xls/xlsx {images}, {texts}')
       return redirect(request.url)

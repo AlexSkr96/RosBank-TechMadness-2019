@@ -10,6 +10,6 @@ CORS(app)
 
 @app.route("/get_users")
 def get_users():
-    f = open('/mnt/c/Resources/TechMadness/db/users.json', 'r')
-    txt = f.read()
-    return txt
+  f = open('/mnt/c/Resources/TechMadness/db/users.json', 'r')
+  txt = f.read()
+  return txt
